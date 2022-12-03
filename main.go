@@ -2,7 +2,7 @@ package main
 
 import (
 	"aoc2022/common"
-	"aoc2022/rps"
+	"aoc2022/rucksack"
 	"fmt"
 )
 
@@ -14,10 +14,17 @@ func main() {
 	// fmt.Println("max calories:", maxCalories)
 	// fmt.Println("top 3:", top3)
 
-	// day 2
-	lines := common.GetLinesFromFile("resources/02_rps.txt", true)
-	totalScore := rps.TotalScore(lines)
-	fmt.Println("total score:", totalScore)
-	totalScoreByOutcome := rps.TotalScoreByOutcome(lines)
-	fmt.Println("total score by outcome:", totalScoreByOutcome)
+	// // day 2
+	// lines := common.GetLinesFromFile("resources/02_rps.txt", true)
+	// totalScore := rps.TotalScore(lines)
+	// fmt.Println("total score:", totalScore)
+	// totalScoreByOutcome := rps.TotalScoreByOutcome(lines)
+	// fmt.Println("total score by outcome:", totalScoreByOutcome)
+
+	// day 3
+	lines := common.GetLinesFromFile("resources/03_rucksack.txt", true)
+	sumPrio := rucksack.SumPriorities(lines)
+	fmt.Println("sum prio:", sumPrio)
+	sumPrioGroup := rucksack.SumPrioritiesGroup(lines)
+	fmt.Println("sum prio group:", sumPrioGroup)
 }
