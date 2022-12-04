@@ -2,7 +2,7 @@ package main
 
 import (
 	"aoc2022/common"
-	"aoc2022/rucksack"
+	"aoc2022/ranges"
 	"fmt"
 )
 
@@ -21,10 +21,17 @@ func main() {
 	// totalScoreByOutcome := rps.TotalScoreByOutcome(lines)
 	// fmt.Println("total score by outcome:", totalScoreByOutcome)
 
-	// day 3
-	lines := common.GetLinesFromFile("resources/03_rucksack.txt", true)
-	sumPrio := rucksack.SumPriorities(lines)
-	fmt.Println("sum prio:", sumPrio)
-	sumPrioGroup := rucksack.SumPrioritiesGroup(lines)
-	fmt.Println("sum prio group:", sumPrioGroup)
+	// // day 3
+	// lines := common.GetLinesFromFile("resources/03_rucksack.txt", true)
+	// sumPrio := rucksack.SumPriorities(lines)
+	// fmt.Println("sum prio:", sumPrio)
+	// sumPrioGroup := rucksack.SumPrioritiesGroup(lines)
+	// fmt.Println("sum prio group:", sumPrioGroup)
+
+	// day 4
+	lines := common.GetLinesFromFile("resources/04_ranges.txt", true)
+	commonRanges := ranges.CommonRanges(lines)
+	fmt.Println("common ranges: ", commonRanges)
+	commonRangesPartial := ranges.CommonRangesPartial(lines)
+	fmt.Println("common ranges partial: ", commonRangesPartial)
 }
