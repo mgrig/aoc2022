@@ -2,7 +2,7 @@ package main
 
 import (
 	"aoc2022/common"
-	"aoc2022/ranges"
+	"aoc2022/stacks"
 	"fmt"
 )
 
@@ -28,10 +28,17 @@ func main() {
 	// sumPrioGroup := rucksack.SumPrioritiesGroup(lines)
 	// fmt.Println("sum prio group:", sumPrioGroup)
 
-	// day 4
-	lines := common.GetLinesFromFile("resources/04_ranges.txt", true)
-	commonRanges := ranges.CommonRanges(lines)
-	fmt.Println("common ranges: ", commonRanges)
-	commonRangesPartial := ranges.CommonRangesPartial(lines)
-	fmt.Println("common ranges partial: ", commonRangesPartial)
+	// // day 4
+	// lines := common.GetLinesFromFile("resources/04_ranges.txt", true)
+	// commonRanges := ranges.CommonRanges(lines)
+	// fmt.Println("common ranges: ", commonRanges)
+	// commonRangesPartial := ranges.CommonRangesPartial(lines)
+	// fmt.Println("common ranges partial: ", commonRangesPartial)
+
+	// day 5
+	lines := common.GetLinesFromFile("resources/05_stacks_test.txt", false, false)
+	topCrates := stacks.TopCrates(lines, false)
+	fmt.Println("top crates:", topCrates)
+	topCratesGrouped := stacks.TopCrates(lines, true)
+	fmt.Println("top crates moveGrouped:", topCratesGrouped)
 }

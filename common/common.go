@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func GetLinesFromFile(fileName string, skipEmpty bool) []string {
+func GetLinesFromFile(fileName string, skipEmpty bool, trim bool) []string {
 	file, err := os.Open(fileName)
 	if err != nil {
 		panic(err)
@@ -17,7 +17,10 @@ func GetLinesFromFile(fileName string, skipEmpty bool) []string {
 	lines := make([]string, 0)
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		line := strings.Trim(scanner.Text(), " ")
+		line := scanner.Text()
+		if trim {
+			line = strings.Trim(line, " ")
+		}
 		if skipEmpty && len(line) == 0 {
 			continue
 		}
