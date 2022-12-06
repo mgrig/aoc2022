@@ -2,7 +2,7 @@ package main
 
 import (
 	"aoc2022/common"
-	"aoc2022/stacks"
+	"aoc2022/tuning"
 	"fmt"
 )
 
@@ -35,10 +35,17 @@ func main() {
 	// commonRangesPartial := ranges.CommonRangesPartial(lines)
 	// fmt.Println("common ranges partial: ", commonRangesPartial)
 
-	// day 5
-	lines := common.GetLinesFromFile("resources/05_stacks_test.txt", false, false)
-	topCrates := stacks.TopCrates(lines, false)
-	fmt.Println("top crates:", topCrates)
-	topCratesGrouped := stacks.TopCrates(lines, true)
-	fmt.Println("top crates moveGrouped:", topCratesGrouped)
+	// // day 5
+	// lines := common.GetLinesFromFile("resources/05_stacks_test.txt", false, false)
+	// topCrates := stacks.TopCrates(lines, false)
+	// fmt.Println("top crates:", topCrates)
+	// topCratesGrouped := stacks.TopCrates(lines, true)
+	// fmt.Println("top crates moveGrouped:", topCratesGrouped)
+
+	// day 6
+	line := common.GetLinesFromFile("resources/06_tuning.txt", true, true)[0]
+	startOfPacket := tuning.StartOfPacket(line, 4)
+	fmt.Println("start packet:", startOfPacket)
+	startOfMessage := tuning.StartOfPacket(line, 14)
+	fmt.Println("start message:", startOfMessage)
 }
