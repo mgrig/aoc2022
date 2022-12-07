@@ -2,7 +2,7 @@ package main
 
 import (
 	"aoc2022/common"
-	"aoc2022/tuning"
+	"aoc2022/spaceleft"
 	"fmt"
 )
 
@@ -42,10 +42,18 @@ func main() {
 	// topCratesGrouped := stacks.TopCrates(lines, true)
 	// fmt.Println("top crates moveGrouped:", topCratesGrouped)
 
-	// day 6
-	line := common.GetLinesFromFile("resources/06_tuning.txt", true, true)[0]
-	startOfPacket := tuning.StartOfPacket(line, 4)
-	fmt.Println("start packet:", startOfPacket)
-	startOfMessage := tuning.StartOfPacket(line, 14)
-	fmt.Println("start message:", startOfMessage)
+	// // day 6
+	// line := common.GetLinesFromFile("resources/06_tuning.txt", true, true)[0]
+	// startOfPacket := tuning.StartOfPacket(line, 4)
+	// fmt.Println("start packet:", startOfPacket)
+	// startOfMessage := tuning.StartOfPacket(line, 14)
+	// fmt.Println("start message:", startOfMessage)
+
+	// day 7
+	lines := common.GetLinesFromFile("resources/07_spaceleft.txt", true, true)
+	spaceleft.ParseAndShowTree(lines)
+	totalBelow100k := spaceleft.TotalSizeDirsBelow100k(lines)
+	fmt.Println("total below 100k:", totalBelow100k)
+	sizeDeleteDir := spaceleft.DeleteOneDir(lines)
+	fmt.Println("size delete dir:", sizeDeleteDir)
 }
