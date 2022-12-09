@@ -2,7 +2,7 @@ package main
 
 import (
 	"aoc2022/common"
-	"aoc2022/spaceleft"
+	"aoc2022/treetop"
 	"fmt"
 )
 
@@ -49,11 +49,18 @@ func main() {
 	// startOfMessage := tuning.StartOfPacket(line, 14)
 	// fmt.Println("start message:", startOfMessage)
 
-	// day 7
-	lines := common.GetLinesFromFile("resources/07_spaceleft.txt", true, true)
-	spaceleft.ParseAndShowTree(lines)
-	totalBelow100k := spaceleft.TotalSizeDirsBelow100k(lines)
-	fmt.Println("total below 100k:", totalBelow100k)
-	sizeDeleteDir := spaceleft.DeleteOneDir(lines)
-	fmt.Println("size delete dir:", sizeDeleteDir)
+	// // day 7
+	// lines := common.GetLinesFromFile("resources/07_spaceleft.txt", true, true)
+	// spaceleft.ParseAndShowTree(lines)
+	// totalBelow100k := spaceleft.TotalSizeDirsBelow100k(lines)
+	// fmt.Println("total below 100k:", totalBelow100k)
+	// sizeDeleteDir := spaceleft.DeleteOneDir(lines)
+	// fmt.Println("size delete dir:", sizeDeleteDir)
+
+	// day 8
+	lines := common.GetLinesFromFile("resources/08_treetop.txt", true, true)
+	countVisible := treetop.CountVisible(lines)
+	fmt.Println("visible trees:", countVisible)
+	bestScore := treetop.BestScenicScore(lines)
+	fmt.Println("best score:", bestScore)
 }
