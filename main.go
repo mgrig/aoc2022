@@ -2,7 +2,7 @@ package main
 
 import (
 	"aoc2022/common"
-	"aoc2022/rope"
+	"aoc2022/cycle"
 	"fmt"
 )
 
@@ -64,10 +64,16 @@ func main() {
 	// bestScore := treetop.BestScenicScore(lines)
 	// fmt.Println("best score:", bestScore)
 
-	// day 9
-	lines := common.GetLinesFromFile("resources/09_rope.txt", true, true)
-	countTail := rope.CountTail(lines)
-	fmt.Println("count tail positions:", countTail)
-	countTail10 := rope.CountTail10(lines)
-	fmt.Println("count tail positions 10 knots:", countTail10)
+	// // day 9
+	// lines := common.GetLinesFromFile("resources/09_rope.txt", true, true)
+	// countTail := rope.CountTail(lines)
+	// fmt.Println("count tail positions:", countTail)
+	// countTail10 := rope.CountTail10(lines)
+	// fmt.Println("count tail positions 10 knots:", countTail10)
+
+	// day 10
+	lines := common.GetLinesFromFile("resources/10_cycle.txt", true, true)
+	sum1 := cycle.Sum1(lines)
+	fmt.Println("sum1:", sum1)
+	cycle.Screen(lines)
 }
