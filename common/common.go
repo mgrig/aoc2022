@@ -48,3 +48,10 @@ func ToIntegerValues(lines []string) []int {
 
 	return values
 }
+
+func IntAbs(value int) int {
+	if value < 0 {
+		return -value
+	}
+	return value
+}

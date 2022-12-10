@@ -2,7 +2,7 @@ package main
 
 import (
 	"aoc2022/common"
-	"aoc2022/treetop"
+	"aoc2022/rope"
 	"fmt"
 )
 
@@ -57,10 +57,17 @@ func main() {
 	// sizeDeleteDir := spaceleft.DeleteOneDir(lines)
 	// fmt.Println("size delete dir:", sizeDeleteDir)
 
-	// day 8
-	lines := common.GetLinesFromFile("resources/08_treetop.txt", true, true)
-	countVisible := treetop.CountVisible(lines)
-	fmt.Println("visible trees:", countVisible)
-	bestScore := treetop.BestScenicScore(lines)
-	fmt.Println("best score:", bestScore)
+	// // day 8
+	// lines := common.GetLinesFromFile("resources/08_treetop.txt", true, true)
+	// countVisible := treetop.CountVisible(lines)
+	// fmt.Println("visible trees:", countVisible)
+	// bestScore := treetop.BestScenicScore(lines)
+	// fmt.Println("best score:", bestScore)
+
+	// day 9
+	lines := common.GetLinesFromFile("resources/09_rope.txt", true, true)
+	countTail := rope.CountTail(lines)
+	fmt.Println("count tail positions:", countTail)
+	countTail10 := rope.CountTail10(lines)
+	fmt.Println("count tail positions 10 knots:", countTail10)
 }
