@@ -2,7 +2,9 @@ package common
 
 import (
 	"bufio"
+	"math/big"
 	"os"
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -54,4 +56,21 @@ func IntAbs(value int) int {
 		return -value
 	}
 	return value
+}
+
+func GetOneRegexGroup(re *regexp.Regexp, line string) string {
+	tokens := re.FindStringSubmatch(line)
+	if len(tokens) != 2 {
+		panic("wrong number of groups in line " + line)
+	}
+
+	return tokens[1]
+}
+
+func IntToBigInt(value int) *big.Int {
+	return big.NewInt(int64(value))
+}
+
+func Uint64ToBigInt(value uint64) *big.Int {
+	return new(big.Int).SetUint64(value)
 }
