@@ -1,5 +1,7 @@
 package hill
 
+import "math"
+
 func parseMap(lines []string) (karte [][]int, start, end coord) { //TODO add start, end
 	nrR := len(lines)
 	karte = make([][]int, nrR)
@@ -54,5 +56,46 @@ func moveTo(cell coord, previousPath path, searchMap *searchMap, karte [][]int, 
 		}
 
 		moveTo(neighbor, path, searchMap, karte, end)
+	}
+}
+
+func NrStepsDown(lines []string) int {
+	karte, _, end := parseMap(lines)
+	nrR := len(karte)
+	nrC := len(karte[0])
+
+	path := newPath()
+	searchMap := newSearchMap(nrR, nrC)
+	shortest := math.MaxInt
+	moveToDown(end, path, searchMap, karte, &shortest)
+
+	return shortest
+}
+
+func moveToDown(cell coord, previousPath path, searchMap *searchMap, karte [][]int, shortest *int) {
+	path := previousPath.withNewCoord(cell)
+	wasBetter := searchMap.newPathDown(path)
+	if !wasBetter {
+		return
+	}
+
+	if karte[cell.r][cell.c] == 0 {
+		if path.nrSteps() < *shortest {
+			*shortest = path.nrSteps()
+		}
+		return
+	}
+
+	nrR := len(searchMap.mapInfo)
+	nrC := len(searchMap.mapInfo[0])
+	neighbors := cell.neighbors(nrR, nrC)
+
+	for _, neighbor := range neighbors {
+		// reject neighbor if drop too steep
+		if karte[cell.r][cell.c]-karte[neighbor.r][neighbor.c] > 1 {
+			continue
+		}
+
+		moveToDown(neighbor, path, searchMap, karte, shortest)
 	}
 }

@@ -85,5 +85,7 @@ func main() {
 	// day 12
 	lines := common.GetLinesFromFile("resources/12_hill.txt", true, true)
 	nrSteps := hill.NrSteps(lines)
-	fmt.Println(nrSteps)
+	fmt.Println("nr steps up:", nrSteps)
+	nrStepsDown := hill.NrStepsDown(lines)
+	fmt.Println("nr steps down:", nrStepsDown)
 }

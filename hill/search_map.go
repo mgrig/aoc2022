@@ -38,3 +38,18 @@ func (sm *searchMap) newPath(p path) (wasBetter bool) {
 	}
 	return false
 }
+
+func (sm *searchMap) newPathDown(p path) (wasBetter bool) {
+	if len(p.coords) == 0 {
+		return
+	}
+
+	co := p.coords[len(p.coords)-1]
+	if sm.mapInfo[co.r][co.c] == nil || p.nrSteps() < sm.mapInfo[co.r][co.c].bestSteps() {
+		sm.mapInfo[co.r][co.c] = &cellInfo{
+			bestPathToHere: p,
+		}
+		return true
+	}
+	return false
+}
