@@ -2,7 +2,7 @@ package main
 
 import (
 	"aoc2022/common"
-	"aoc2022/monkey"
+	"aoc2022/hill"
 	"fmt"
 )
 
@@ -77,8 +77,13 @@ func main() {
 	// fmt.Println("sum1:", sum1)
 	// cycle.Screen(lines)
 
-	// day 11
-	lines := common.GetLinesFromFile("resources/11_monkey.txt", true, true)
-	// fmt.Println(monkey.Business20Rounds(lines, 20, true))
-	fmt.Println(monkey.Business20Rounds(lines, 10000, false))
+	// // day 11
+	// lines := common.GetLinesFromFile("resources/11_monkey.txt", true, true)
+	// // fmt.Println(monkey.Business20Rounds(lines, 20, true))
+	// fmt.Println(monkey.Business20Rounds(lines, 10000, false))
+
+	// day 12
+	lines := common.GetLinesFromFile("resources/12_hill.txt", true, true)
+	nrSteps := hill.NrSteps(lines)
+	fmt.Println(nrSteps)
 }
