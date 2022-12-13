@@ -51,6 +51,17 @@ func ToIntegerValues(lines []string) []int {
 	return values
 }
 
+// return -1 if value is negative, 0 if 0, 1 if positive
+func IntSgn(value int) int {
+	if value == 0 {
+		return 0
+	}
+	if value > 0 {
+		return 1
+	}
+	return -1
+}
+
 func IntAbs(value int) int {
 	if value < 0 {
 		return -value
