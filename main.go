@@ -90,7 +90,9 @@ func main() {
 	// fmt.Println("nr steps down:", nrStepsDown)
 
 	// day 13
-	lines := common.GetLinesFromFile("resources/13_distress_test.txt", true, true)
+	lines := common.GetLinesFromFile("resources/13_distress.txt", true, true)
 	sum1 := distress.Sum1(lines)
 	fmt.Println("sum1", sum1)
+	sorted := distress.Sorted(lines)
+	fmt.Println("sorted", sorted)
 }
