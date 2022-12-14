@@ -2,7 +2,7 @@ package main
 
 import (
 	"aoc2022/common"
-	"aoc2022/distress"
+	"aoc2022/sand"
 	"fmt"
 )
 
@@ -89,10 +89,17 @@ func main() {
 	// nrStepsDown := hill.NrStepsDown(lines)
 	// fmt.Println("nr steps down:", nrStepsDown)
 
-	// day 13
-	lines := common.GetLinesFromFile("resources/13_distress.txt", true, true)
-	sum1 := distress.Sum1(lines)
-	fmt.Println("sum1", sum1)
-	sorted := distress.Sorted(lines)
-	fmt.Println("sorted", sorted)
+	// // day 13
+	// lines := common.GetLinesFromFile("resources/13_distress.txt", true, true)
+	// sum1 := distress.Sum1(lines)
+	// fmt.Println("sum1", sum1)
+	// sorted := distress.Sorted(lines)
+	// fmt.Println("sorted", sorted)
+
+	// day 14
+	lines := common.GetLinesFromFile("resources/14_sand.txt", true, true)
+	part1 := sand.Part1(lines)
+	fmt.Println("part1", part1)
+	part2 := sand.Part2(lines)
+	fmt.Println("part2", part2)
 }

@@ -2,6 +2,7 @@ package common
 
 import (
 	"bufio"
+	"math"
 	"math/big"
 	"os"
 	"regexp"
@@ -67,6 +68,26 @@ func IntAbs(value int) int {
 		return -value
 	}
 	return value
+}
+
+func IntMin(values ...int) int {
+	ret := math.MaxInt
+	for i := range values {
+		if values[i] < ret {
+			ret = values[i]
+		}
+	}
+	return ret
+}
+
+func IntMax(values ...int) int {
+	ret := math.MinInt
+	for i := range values {
+		if values[i] > ret {
+			ret = values[i]
+		}
+	}
+	return ret
 }
 
 func GetOneRegexGroup(re *regexp.Regexp, line string) string {
