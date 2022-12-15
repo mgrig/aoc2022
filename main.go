@@ -2,7 +2,7 @@ package main
 
 import (
 	"aoc2022/common"
-	"aoc2022/sand"
+	"aoc2022/sensors"
 	"fmt"
 )
 
@@ -96,10 +96,19 @@ func main() {
 	// sorted := distress.Sorted(lines)
 	// fmt.Println("sorted", sorted)
 
-	// day 14
-	lines := common.GetLinesFromFile("resources/14_sand.txt", true, true)
-	part1 := sand.Part1(lines)
-	fmt.Println("part1", part1)
-	part2 := sand.Part2(lines)
-	fmt.Println("part2", part2)
+	// // day 14
+	// lines := common.GetLinesFromFile("resources/14_sand.txt", true, true)
+	// part1 := sand.Part1(lines)
+	// fmt.Println("part1", part1)
+	// part2 := sand.Part2(lines)
+	// fmt.Println("part2", part2)
+
+	// day 15
+	lines := common.GetLinesFromFile("resources/15_sensors.txt", true, true)
+	// nrExcludedPositions := sensors.NrExcludedPositionsOnRow(lines, 10)
+	// nrExcludedPositions := sensors.NrExcludedPositionsOnRow(lines, 2000000)
+	// fmt.Println("part1", nrExcludedPositions)
+	tuning := sensors.TuningFreq(lines, 0, 4000000)
+	// tuning := sensors.TuningFreq(lines, 0, 20)
+	fmt.Println("tuning freq", tuning)
 }
