@@ -4,6 +4,7 @@ import (
 	"aoc2022/common"
 	"aoc2022/sensors"
 	"fmt"
+	"time"
 )
 
 func main() {
@@ -108,7 +109,9 @@ func main() {
 	// nrExcludedPositions := sensors.NrExcludedPositionsOnRow(lines, 10)
 	// nrExcludedPositions := sensors.NrExcludedPositionsOnRow(lines, 2000000)
 	// fmt.Println("part1", nrExcludedPositions)
+	t0 := time.Now()
 	tuning := sensors.TuningFreq(lines, 0, 4000000)
+	t1 := time.Now()
 	// tuning := sensors.TuningFreq(lines, 0, 20)
-	fmt.Println("tuning freq", tuning)
+	fmt.Printf("(%d ms) tuning freq: %d\n", int(t1.Sub(t0).Milliseconds()), tuning)
 }

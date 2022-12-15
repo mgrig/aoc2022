@@ -41,6 +41,25 @@ func NrExcludedPositionsOnRow(lines []string, row int) int {
 	return len(lineCover)
 }
 
+/*
+I want to avoid searching over the huge grid of part 2.
+Main idea: given a start coord, move away from any nearby sensor position.
+Each area "covered" by a sensor (aka where we know there is no other beacon)
+is represented by a "romb" instance. Now imagine this rhomb is the base of a
+pyramid with the top point in the center, i.e. on the sensor position.
+Overlap all such pyramids from the input file.
+Every coordinate that is covered by at least one sensor (pyramid) will have a
+height > 0.
+We are asked to find the only point (in the given huge grid) that has height 0.
+Seen as a 3d landscape, the task is to find the global minimum.
+As the problem guarantees there is only 1 such point, we can imagine that in the
+3d landscape, looking from the global minimum, we are surrounded by faces of pyramids.
+This solution asserts that if we do a hill-descent algorithmus starting on each
+existing pyramid face, we are guaranteed to eventully end up in the global minimum.
+To guarantee we check every face, we set 4 starting points for each pyramid, 1 unit
+away from the top/center in each direction (N, S, E, W).
+Note: this is actually a bug, and we should start on NE, NW, SW, SE :/
+*/
 func TuningFreq(lines []string, min, max int) int {
 	rombs := make([]romb, len(lines))
 	knownBeacons := make(map[coord]bool, len(lines))
@@ -57,6 +76,8 @@ func TuningFreq(lines []string, min, max int) int {
 
 func findBeacon(min, max int, rombs []romb) coord {
 	for _, r := range rombs {
+		// Pick 4 start positions for each pyramid, one for each face
+		// Bug: Should be NE, NW, SW, SE instead of N, S, E, W.
 		beacon := searchFrom(newCoord(r.center.x+1, r.center.y), min, max, &rombs)
 		if beacon != nil {
 			return *beacon
@@ -81,6 +102,8 @@ func findBeacon(min, max int, rombs []romb) coord {
 }
 
 // go downhill from given "pos"
+// Avoid recursive implementation, as the depth could be significant. Use instead
+// less readable for loop with mutating position.
 func searchFrom(pos coord, min, max int, rombs *[]romb) *coord {
 	if pos.x < min || pos.x > max || pos.y < min || pos.y > max {
 		return nil
@@ -97,6 +120,11 @@ func searchFrom(pos coord, min, max int, rombs *[]romb) *coord {
 				// found solution
 				return &neighbor
 			}
+			// Decide we found a smaller neighbor if we move down some pyramid slope,
+			// and not up any other.
+			// Note: we pick the first "smaller" neighbor - this is potentially unsafe,
+			// as the solution may be down another smaller neighbor, but this was good
+			// enough for the input test.
 			if smallerHeightVec(hVec, hPos) {
 				pos = neighbor
 				foundSmallerNeighbor = true
