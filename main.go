@@ -2,9 +2,8 @@ package main
 
 import (
 	"aoc2022/common"
-	"aoc2022/sensors"
+	"aoc2022/volcano"
 	"fmt"
-	"time"
 )
 
 func main() {
@@ -104,14 +103,19 @@ func main() {
 	// part2 := sand.Part2(lines)
 	// fmt.Println("part2", part2)
 
-	// day 15
-	lines := common.GetLinesFromFile("resources/15_sensors.txt", true, true)
-	// nrExcludedPositions := sensors.NrExcludedPositionsOnRow(lines, 10)
-	// nrExcludedPositions := sensors.NrExcludedPositionsOnRow(lines, 2000000)
-	// fmt.Println("part1", nrExcludedPositions)
-	t0 := time.Now()
-	tuning := sensors.TuningFreq(lines, 0, 4000000)
-	t1 := time.Now()
-	// tuning := sensors.TuningFreq(lines, 0, 20)
-	fmt.Printf("(%d ms) tuning freq: %d\n", int(t1.Sub(t0).Milliseconds()), tuning)
+	// // day 15
+	// lines := common.GetLinesFromFile("resources/15_sensors.txt", true, true)
+	// // nrExcludedPositions := sensors.NrExcludedPositionsOnRow(lines, 10)
+	// // nrExcludedPositions := sensors.NrExcludedPositionsOnRow(lines, 2000000)
+	// // fmt.Println("part1", nrExcludedPositions)
+	// t0 := time.Now()
+	// tuning := sensors.TuningFreq(lines, 0, 4000000)
+	// t1 := time.Now()
+	// // tuning := sensors.TuningFreq(lines, 0, 20)
+	// fmt.Printf("(%d ms) tuning freq: %d\n", int(t1.Sub(t0).Milliseconds()), tuning)
+
+	// day 16
+	lines := common.GetLinesFromFile("resources/16_volcano.txt", true, true)
+	part1 := volcano.Part1(lines)
+	fmt.Println("part1", part1)
 }
