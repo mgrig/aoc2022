@@ -51,3 +51,19 @@ func (r romb) height(c coord) int {
 	}
 	return h
 }
+
+func (r romb) minDist(other romb) int {
+	return r.center.manhattanDist(other.center) - r.size - other.size - 1
+}
+
+// Returns all coords at given manhattan dist from the center
+func (r romb) isoline(dist int) []coord {
+	coords := make([]coord, 4*dist)
+	for i := 0; i < dist; i++ {
+		coords[i] = newCoord(r.center.x+i, r.center.y-dist+i)
+		coords[dist+i] = newCoord(r.center.x+dist-i, r.center.y+i)
+		coords[2*dist+i] = newCoord(r.center.x-i, r.center.y+dist-i)
+		coords[3*dist+i] = newCoord(r.center.x-dist+i, r.center.y-i)
+	}
+	return coords
+}

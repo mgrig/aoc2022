@@ -2,6 +2,7 @@ package sensors
 
 import (
 	"aoc2022/common"
+	"fmt"
 	"regexp"
 )
 
@@ -69,31 +70,120 @@ func TuningFreq(lines []string, min, max int) int {
 		knownBeacons[beacon] = true
 	}
 
-	beacon = findBeacon(min, max, rombs)
+	// beacon = findBeacon(min, max, rombs)
+	beacon = findFaster(min, max, rombs)
+	fmt.Println("beacon", beacon)
 
 	return 4000000*beacon.x + beacon.y
+}
+
+/*
+A very fast solution, without even a gradient search
+----------------------------------------------------
+How does the solution point look like? A single point surrounded by areas that are covered by various rhombi.
+A tipical case would be for 2 rhombi to be at such a distance to each other, that there is only a single diagonal between them, like this:
+####.#
+###.##
+##.###
+#.####
+.#####
+
+And other 2 rhombi that leave a perpendicular diagonal as well:
+#.####
+##.###
+###.##
+####.#
+#####.
+
+Intersecting the 2 lines gives us the solution.
+There may be a few special cases, but let's cover the tipical case first.
+
+MD(p1, p2) = manhattan distance between p1 and p2
+If we look at all rhombi pairs (total of (N^2-2)/2), there should be pairs that leave such a size 1 distance between them.
+Distance between 2 rhombi = MD(r1.center, r2.center) - r1.size - r2.size - 1
+
+For my input this shows pairs (0, 17) and (9, 20) are at such distances.
+There may be a smarter way to compute the point that lies in between these 4 rhombi, but a straightforward (and good enough) one is:
+- generate all points surrounding one of the 4 rhombi (can pick the one with the smallest size for a shorter list)
+- for each point test that it is inside the min max boundaries and it is not covered by any rhombus (it would be enough that it's not covered by the 4 rhombi, but can also check all for extra safety)
+- the solution is guaranteed to be on one of these points
+
+This worked for my input, and is, expectedly, very fast.
+
+For a general solution, there may be a few gotchas.
+1) The solution could be isolated by corners of multiple rhombi instead of sides, in which case distance-of-1 rule above might not apply.
+I assume this is also a very specific configuration around the solution, and can be covered by a combination of small distances/overlaps.
+2) More than 2 rhombi pairs at distance 1.
+
+I did not bother to cover these special cases, as the typical solution solved my input.
+*/
+func findFaster(min, max int, rombs []romb) coord {
+	for i := 0; i < len(rombs)-1; i++ {
+		r1 := rombs[i]
+		for j := i + 1; j < len(rombs); j++ {
+			r2 := rombs[j]
+			dist := r1.minDist(r2)
+			// fmt.Printf("%6d ", dist)
+			if dist == 1 {
+				fmt.Printf("%d <-> %d : %d\n", i, j, dist)
+				fmt.Println(r1, r2)
+			}
+		}
+		// fmt.Println()
+	}
+
+	/* my output
+	0 <-> 17 : 1
+	<(3088287, 2966967), 767923> <(2343717, 3649198), 658876>
+	9 <-> 20 : 1
+	<(2404143, 3161036), 523652> <(2973167, 3783783), 668117>
+	*/
+	// For simplicity I just hardcode rhombus index 9, but this is just one of the 4 rhombi, with the smallest size.
+	rombIndex := 9
+	around := rombs[rombIndex].isoline(rombs[rombIndex].size + 1)
+	for _, c := range around {
+		if c.x < min || c.x > max || c.y < min || c.y > max {
+			continue
+		}
+
+		if anyRombCovers(c, &rombs) {
+			continue
+		}
+		// GOT IT
+		return c
+	}
+	panic("NOT FOUND")
+}
+
+func anyRombCovers(c coord, rombs *[]romb) bool {
+	for _, r := range *rombs {
+		if r.covers(c) {
+			return true
+		}
+	}
+	return false
 }
 
 func findBeacon(min, max int, rombs []romb) coord {
 	for _, r := range rombs {
 		// Pick 4 start positions for each pyramid, one for each face
 		// Bug: Should be NE, NW, SW, SE instead of N, S, E, W.
-		beacon := searchFrom(newCoord(r.center.x+1, r.center.y), min, max, &rombs)
+		beacon := searchFrom(newCoord(r.center.x+1, r.center.y+1), min, max, &rombs)
 		if beacon != nil {
 			return *beacon
 		}
 
-		beacon = searchFrom(newCoord(r.center.x-1, r.center.y), min, max, &rombs)
+		beacon = searchFrom(newCoord(r.center.x-1, r.center.y+1), min, max, &rombs)
 		if beacon != nil {
 			return *beacon
 		}
 
-		beacon = searchFrom(newCoord(r.center.x, r.center.y-1), min, max, &rombs)
+		beacon = searchFrom(newCoord(r.center.x-1, r.center.y-1), min, max, &rombs)
 		if beacon != nil {
 			return *beacon
 		}
 
-		beacon = searchFrom(newCoord(r.center.x, r.center.y+1), min, max, &rombs)
+		beacon = searchFrom(newCoord(r.center.x+1, r.center.y-1), min, max, &rombs)
 		if beacon != nil {
 			return *beacon
 		}
