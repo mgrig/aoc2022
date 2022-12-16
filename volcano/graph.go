@@ -32,6 +32,16 @@ func (g graph) getExisting(name string) *node {
 	return pNode
 }
 
+func (g graph) getTotalNonZeroValves() int {
+	count := 0
+	for _, v := range g.nodes {
+		if v.flow > 0 {
+			count += 1
+		}
+	}
+	return count
+}
+
 var re *regexp.Regexp = regexp.MustCompile(`Valve (.+) has flow rate=(\d+); tunnels? leads? to valves? (.+)`)
 
 func parseGraph(lines []string) *graph {

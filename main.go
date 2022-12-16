@@ -116,6 +116,9 @@ func main() {
 
 	// day 16
 	lines := common.GetLinesFromFile("resources/16_volcano.txt", true, true)
-	part1 := volcano.Part1(lines)
-	fmt.Println("part1", part1)
+	// part1 := volcano.Part1(lines)
+	// fmt.Println("part1", part1)
+	//rand.Seed(time.Now().UnixNano())
+	part2 := volcano.Part2(lines)
+	fmt.Println("part2", part2)
 }

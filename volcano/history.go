@@ -1,6 +1,9 @@
 package volcano
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
 
 type history struct {
 	actions []action
@@ -20,8 +23,36 @@ func (h history) String() string {
 	return strings.Join(strs, ", ")
 }
 
+func (h history) getLastAction() action {
+	if len(h.actions) > 0 {
+		return h.actions[len(h.actions)-1]
+	}
+	return nil
+}
+
+func (h history) sanityCheck() {
+	if len(h.actions) > 0 {
+		currentName := "AA"
+		for _, a := range h.actions {
+			if !a.canApplyTo(currentName) {
+				panic("failed sanity check")
+			}
+			moveAction, ok := a.(move)
+			if ok {
+				currentName = moveAction.to
+			}
+		}
+	}
+}
+
 func (h history) addAction(a action) history {
-	newHist := h
+	if !a.canApplyTo(h.getCurrentName()) {
+		panic(fmt.Sprintf("incompatible action %s on name %s", a, h.getCurrentName()))
+	}
+	newHist := history{
+		actions: make([]action, len(h.actions)),
+	}
+	copy(newHist.actions, h.actions)
 	newHist.actions = append(newHist.actions, a)
 	return newHist
 }
@@ -58,6 +89,7 @@ func (h history) lastVisitTo(name string) (visited bool, historyUntil history) {
 
 	lastIndex := -1
 	leftNameValve := false
+	leftFirstValve := false
 	for i := 0; i < len(h.actions)-1; i++ {
 		if h.actions[i].isOpen(name) {
 			lastIndex = i
@@ -67,6 +99,10 @@ func (h history) lastVisitTo(name string) (visited bool, historyUntil history) {
 			lastIndex = i
 			continue
 		}
+		if i == 0 && h.actions[i].isMoveFrom(name) {
+			leftFirstValve = true
+			lastIndex = 0
+		}
 		if lastIndex != -1 {
 			leftNameValve = true
 		}
@@ -74,6 +110,10 @@ func (h history) lastVisitTo(name string) (visited bool, historyUntil history) {
 
 	if lastIndex != -1 && leftNameValve {
 		return true, history{actions: h.actions[0 : lastIndex+1]}
+	}
+
+	if leftFirstValve {
+		return true, newHistory()
 	}
 
 	return false, newHistory()
@@ -87,4 +127,15 @@ func (h history) countOpenValves() int {
 		}
 	}
 	return count
+}
+
+func (h history) getCurrentName() string {
+	ret := "AA"
+	for _, a := range h.actions {
+		moveAction, ok := a.(move)
+		if ok {
+			ret = moveAction.to
+		}
+	}
+	return ret
 }

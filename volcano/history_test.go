@@ -10,11 +10,9 @@ import (
 func TestHistoryLastVisited(t *testing.T) {
 	history := newHistory()
 	history = history.addAction(newMoveAction("a", "b"))
-	history = history.addAction(newMoveAction("b", "c"))
-	history = history.addAction(newMoveAction("c", "d"))
-	history = history.addAction(newMoveAction("d", "b"))
+	history = history.addAction(newMoveAction("b", "a"))
 
-	visited, historyUntil := history.lastVisitTo("b")
+	visited, historyUntil := history.lastVisitTo("a")
 
 	require.True(t, visited)
 	fmt.Println(historyUntil)
