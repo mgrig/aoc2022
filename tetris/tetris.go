@@ -15,6 +15,14 @@ func Part1(line string, totalRocks int) int {
 	deltaHeight := 0
 	for { // simulation steps
 
+		/*
+			We are searching in all previous states for a repetition of:
+			- same upcoming rock index
+			- same upcoming wind index
+			- same (normalized) skyline at the tower top
+			If we find 2 such states, we can compute a repeat of what happened between them and only top it up
+			with a computing the remainder.
+		*/
 		if !gotRepetition {
 			var firstIndex, secondIndex int
 			gotRepetition, firstIndex, secondIndex = history.addState(newState(placedRocks%5, wind.getUpcomingIndex()%len(line), bottom.skyline()))
@@ -38,8 +46,7 @@ func Part1(line string, totalRocks int) int {
 
 		// spawn rock (type + start position)
 		spawnPos := newCoord(2, 4+bottom.highest())
-		// fmt.Println("bottom highest", bottom.highest())
-		// fmt.Println("spawn pos", spawnPos)
+
 		rock := GetShape(placedRocks, spawnPos)
 
 		for { // falling piece
