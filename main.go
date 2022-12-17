@@ -2,7 +2,7 @@ package main
 
 import (
 	"aoc2022/common"
-	"aoc2022/volcano"
+	"aoc2022/tetris"
 	"fmt"
 )
 
@@ -114,11 +114,18 @@ func main() {
 	// // tuning := sensors.TuningFreq(lines, 0, 20)
 	// fmt.Printf("(%d ms) tuning freq: %d\n", int(t1.Sub(t0).Milliseconds()), tuning)
 
-	// day 16
-	lines := common.GetLinesFromFile("resources/16_volcano.txt", true, true)
-	// part1 := volcano.Part1(lines)
-	// fmt.Println("part1", part1)
-	//rand.Seed(time.Now().UnixNano())
-	part2 := volcano.Part2(lines)
+	// // day 16
+	// lines := common.GetLinesFromFile("resources/16_volcano.txt", true, true)
+	// // part1 := volcano.Part1(lines)
+	// // fmt.Println("part1", part1)
+	// //rand.Seed(time.Now().UnixNano())
+	// part2 := volcano.Part2(lines)
+	// fmt.Println("part2", part2)
+
+	// day 17
+	line := common.GetLinesFromFile("resources/17_tetris.txt", true, true)[0]
+	part1 := tetris.Part1(line, 2022)
+	fmt.Println("part1", part1)
+	part2 := tetris.Part1(line, 1000000000000)
 	fmt.Println("part2", part2)
 }
