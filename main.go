@@ -2,7 +2,7 @@ package main
 
 import (
 	"aoc2022/common"
-	"aoc2022/tetris"
+	"aoc2022/cubes"
 	"fmt"
 )
 
@@ -122,10 +122,15 @@ func main() {
 	// part2 := volcano.Part2(lines)
 	// fmt.Println("part2", part2)
 
-	// day 17
-	line := common.GetLinesFromFile("resources/17_tetris.txt", true, true)[0]
-	part1 := tetris.Part1(line, 2022)
-	fmt.Println("part1", part1)
-	part2 := tetris.Part1(line, 1000000000000)
-	fmt.Println("part2", part2)
+	// // day 17
+	// line := common.GetLinesFromFile("resources/17_tetris.txt", true, true)[0]
+	// part1 := tetris.Part1(line, 2022)
+	// fmt.Println("part1", part1)
+	// part2 := tetris.Part1(line, 1000000000000)
+	// fmt.Println("part2", part2)
+
+	// day 18
+	lines := common.GetLinesFromFile("resources/18_cubes.txt", true, true)
+	unconnectedSides := cubes.UnconnectedSides(lines)
+	fmt.Println("part1", unconnectedSides)
 }

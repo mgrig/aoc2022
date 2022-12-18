@@ -52,6 +52,14 @@ func ToIntegerValues(lines []string) []int {
 	return values
 }
 
+func StringToInt(s string) int {
+	value, err := strconv.Atoi(s)
+	if err != nil {
+		panic(err)
+	}
+	return value
+}
+
 // return -1 if value is negative, 0 if 0, 1 if positive
 func IntSgn(value int) int {
 	if value == 0 {
