@@ -7,8 +7,6 @@ import (
 	"strings"
 )
 
-var faceDeltas map[int]coord = make(map[int]coord, 7)
-
 func ExteriorSides(lines []string) int {
 	s := newShape()
 	for _, line := range lines {
