@@ -131,6 +131,7 @@ func main() {
 
 	// day 18
 	lines := common.GetLinesFromFile("resources/18_cubes.txt", true, true)
-	unconnectedSides := cubes.UnconnectedSides(lines)
-	fmt.Println("part1", unconnectedSides)
+	// part1 in git repo. Modified structs for part 2
+	exteriorSides := cubes.ExteriorSides(lines)
+	fmt.Println("part2", exteriorSides)
 }

@@ -2,19 +2,14 @@ package cubes
 
 import (
 	"aoc2022/common"
+	"fmt"
+	"math"
 	"strings"
 )
 
 var faceDeltas map[int]coord = make(map[int]coord, 7)
 
-func UnconnectedSides(lines []string) int {
-	faceDeltas[1] = newCoord(0, -1, 0)
-	faceDeltas[2] = newCoord(0, 0, 1)
-	faceDeltas[3] = newCoord(-1, 0, 0)
-	faceDeltas[4] = newCoord(1, 0, 0)
-	faceDeltas[5] = newCoord(0, 0, -1)
-	faceDeltas[6] = newCoord(0, 1, 0)
-
+func ExteriorSides(lines []string) int {
 	s := newShape()
 	for _, line := range lines {
 		tokens := strings.Split(line, ",")
@@ -28,23 +23,57 @@ func UnconnectedSides(lines []string) int {
 		s.addCoord(&cb)
 	}
 
+	// find external face
+	// - find any cube with min y
+	// - pick face index 1
+	minY := math.MaxInt
+	var minYCube *cube
 	for c, cb := range s.coords {
-		for face := 1; face <= 6; face++ {
-			if cb.connectedFaces[face] {
-				continue
-			}
-			cNeigh := newCoord(c.x+faceDeltas[face].x, c.y+faceDeltas[face].y, c.z+faceDeltas[face].z)
-			if s.contains(cNeigh) {
-				cb.markConnected(face)
-				s.coords[cNeigh].markConnected(7 - face)
-			}
+		if c.y < minY {
+			minY = c.y
+			minYCube = cb
 		}
 	}
+	if minYCube == nil {
+		panic("no start cube found")
+	}
+	startFace := newFace(minYCube.c, 1)
 
-	sum := 0
-	for _, cb := range s.coords {
-		sum += 6 - len(cb.connectedFaces)
+	facesChecked := newFaceSet()
+	facesToCheck := newFaceSet()
+	facesToCheck.addFace(startFace)
+
+	for len(facesToCheck.faces) > 0 {
+		f := facesToCheck.getAny()
+		fCoord := newCoord(f.x, f.y, f.z)
+		// fmt.Printf("checking %v\n", f)
+
+		dirs := getDirections(f.faceIndex)
+		for _, dir := range dirs {
+			if dir == 0 {
+				panic(fmt.Sprintf("wrong dir %d", dir))
+			}
+			var toCheck face
+			// check edge cube first
+
+			if edgeCoord := fCoord.plus(getEdgeCoord(f.faceIndex, dir)); s.contains(edgeCoord) {
+				toCheck = newFace(edgeCoord, oppositeFaceIndex(dir))
+			} else if connectedCoord := fCoord.plus(getConnectedCoord(dir)); s.contains(connectedCoord) {
+				toCheck = newFace(connectedCoord, f.faceIndex)
+			} else {
+				toCheck = newFace(fCoord, dir)
+			}
+
+			if !facesChecked.contains(toCheck) {
+				facesToCheck.addFace(toCheck)
+			}
+		}
+		facesToCheck.removeFace(f)
+		facesChecked.addFace(f)
+
+		// fmt.Printf("  toCheck: %s\n", facesToCheck)
+		// fmt.Printf("  checked: %s\n", facesChecked)
 	}
 
-	return sum
+	return len(facesChecked.faces)
 }
