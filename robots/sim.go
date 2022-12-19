@@ -2,6 +2,8 @@ package robots
 
 import "fmt"
 
+var resource_types = []string{"ore", "clay", "obsidian", "geode"}
+
 var bestScore int
 var maxSteps int
 
