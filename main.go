@@ -137,6 +137,8 @@ func main() {
 
 	// day 19
 	lines := common.GetLinesFromFile("resources/19_robots.txt", true, true)
-	part1 := robots.Part1(lines)
-	fmt.Println("part1", part1)
+	// part1 := robots.Part1(lines)
+	// fmt.Println("part1", part1)
+	part2 := robots.Part2(lines)
+	fmt.Println("part2", part2)
 }

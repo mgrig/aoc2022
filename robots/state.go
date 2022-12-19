@@ -26,9 +26,9 @@ func (s state) clone() state {
 }
 
 // Simplify state to make them look more like each other, for caching.
-// - if too many resources of a type (that cannot be spent by step 24) then throw away excess
+// - if too many resources of a type (that cannot be spent by step maxSteps) then throw away excess
 func (s *state) simplify(step int, blue *blueprint) {
-	remainingSteps := 24 - step + 1 // includes "step" and 24
+	remainingSteps := maxSteps - step + 1 // includes "step" and maxSteps
 
 	maxSpendableOre := remainingSteps * blue.maxCostByRobotType["ore"]
 	if s.availableResources["ore"] > maxSpendableOre {
@@ -44,4 +44,16 @@ func (s *state) simplify(step int, blue *blueprint) {
 	if s.availableResources["obsidian"] > maxSpendableObsidian {
 		s.availableResources["obsidian"] = maxSpendableObsidian
 	}
+}
+
+// not enough steps remaining to beat the current best solution?
+func (s state) canStillBeatBest(step int) bool {
+	if step == maxSteps {
+		return true
+	}
+	remainingSteps := maxSteps - step + 1
+	maxGeodesTillEnd := s.availableResources["geode"] +
+		remainingSteps*s.availableRobots["geode"] +
+		remainingSteps*(remainingSteps+1)/2
+	return maxGeodesTillEnd > bestScore
 }

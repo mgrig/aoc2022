@@ -3,6 +3,7 @@ package robots
 import "fmt"
 
 var bestScore int
+var maxSteps int
 
 func Part1(lines []string) int {
 	initState := newState()
@@ -10,6 +11,7 @@ func Part1(lines []string) int {
 
 	totalScore := 0
 	for _, line := range lines {
+		maxSteps = 24
 		bestScore = 0
 		blue := parseBlueprint(line)
 		c := newCache()
@@ -21,15 +23,32 @@ func Part1(lines []string) int {
 	return totalScore
 }
 
+func Part2(lines []string) int {
+	initState := newState()
+	initState.availableRobots["ore"] = 1
+
+	totalScore := 1
+	maxLines := 3
+	if len(lines) < maxLines {
+		maxLines = len(lines)
+	}
+	for i := 0; i < maxLines; i++ {
+		line := lines[i]
+		maxSteps = 32
+		bestScore = 0
+		blue := parseBlueprint(line)
+		c := newCache()
+		geodes := rec(1, initState, &blue, &c)
+		fmt.Println("blueprint ", blue.id, "geodes", geodes)
+		totalScore *= geodes
+	}
+
+	return totalScore
+}
+
 func rec(step int, preState state, blue *blueprint, c *cache) int {
 	// fmt.Println("start step", step)
 	// fmt.Println(step, preState.decisionHistory)
-
-	// any shortcuts?
-
-	// - not enough steps remaining to beat the current best solution?
-
-	// simplify state
 
 	found, score := c.get(step, preState)
 	if found {
@@ -51,7 +70,7 @@ func rec(step int, preState state, blue *blueprint, c *cache) int {
 	}
 	// fmt.Println("  post collection res:", postCollectionState.availableResources)
 
-	if step == 24 {
+	if step == maxSteps {
 		currentGeodes := postCollectionState.availableResources["geode"]
 		if currentGeodes > bestScore {
 			bestScore = currentGeodes
@@ -85,6 +104,10 @@ func rec(step int, preState state, blue *blueprint, c *cache) int {
 			postState.decisionHistory = append(postState.decisionHistory, fmt.Sprintf("(build %s)", resType))
 			postState.simplify(step, blue)
 
+			if !postState.canStillBeatBest(step + 1) {
+				continue
+			}
+
 			finalGeodes := rec(step+1, postState, blue, c)
 			if finalGeodes > bestFromThisState {
 				bestFromThisState = finalGeodes
@@ -99,9 +122,11 @@ func rec(step int, preState state, blue *blueprint, c *cache) int {
 		postState.decisionHistory = append(postState.decisionHistory, "(wait)")
 		postState.simplify(step, blue)
 
-		finalGeodes := rec(step+1, postState, blue, c)
-		if finalGeodes > bestFromThisState {
-			bestFromThisState = finalGeodes
+		if postState.canStillBeatBest(step + 1) {
+			finalGeodes := rec(step+1, postState, blue, c)
+			if finalGeodes > bestFromThisState {
+				bestFromThisState = finalGeodes
+			}
 		}
 	}
 
