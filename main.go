@@ -2,7 +2,7 @@ package main
 
 import (
 	"aoc2022/common"
-	"aoc2022/cubes"
+	"aoc2022/robots"
 	"fmt"
 )
 
@@ -129,9 +129,14 @@ func main() {
 	// part2 := tetris.Part1(line, 1000000000000)
 	// fmt.Println("part2", part2)
 
-	// day 18
-	lines := common.GetLinesFromFile("resources/18_cubes.txt", true, true)
-	// part1 in git repo. Modified structs for part 2
-	exteriorSides := cubes.ExteriorSides(lines)
-	fmt.Println("part2", exteriorSides)
+	// // day 18
+	// lines := common.GetLinesFromFile("resources/18_cubes.txt", true, true)
+	// // part1 in git repo. Modified structs for part 2
+	// exteriorSides := cubes.ExteriorSides(lines)
+	// fmt.Println("part2", exteriorSides)
+
+	// day 19
+	lines := common.GetLinesFromFile("resources/19_robots.txt", true, true)
+	part1 := robots.Part1(lines)
+	fmt.Println("part1", part1)
 }
