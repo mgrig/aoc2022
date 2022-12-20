@@ -4,6 +4,7 @@ import (
 	"aoc2022/common"
 	"aoc2022/ringbuffer"
 	"fmt"
+	"time"
 )
 
 func main() {
@@ -146,6 +147,8 @@ func main() {
 	lines := common.GetLinesFromFile("resources/20_ringbuffer.txt", true, true)
 	part1 := ringbuffer.Part1(lines)
 	fmt.Println("part1:", part1)
+	t0 := time.Now()
 	part2 := ringbuffer.Part2(lines, 811589153)
-	fmt.Println("part2:", part2)
+	t1 := time.Now()
+	fmt.Printf("(%d ms) part2: %d\n", int(t1.Sub(t0).Milliseconds()), part2)
 }

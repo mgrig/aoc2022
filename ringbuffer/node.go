@@ -40,6 +40,14 @@ func (n *node) addLeft(other *node) {
 	wasLeft.right = other
 }
 
+func (n *node) extract() {
+	l := n.left
+	r := n.right
+
+	l.right = r
+	r.left = l
+}
+
 func (first *node) getByIndex(index int) *node {
 	if index == 0 {
 		return first
@@ -68,56 +76,21 @@ func (n *node) moveRight(steps int) {
 	if steps < 0 {
 		panic("steps must be >= 0")
 	}
-	for i := 0; i < steps; i++ {
-		n.swapWithRight()
-	}
-}
-
-func (n *node) swapWithRight() {
-	if n.right == n {
-		panic("ring of 1?")
-	}
-
-	other := n.right
-	wasLeft := n.left
-	wasRightRight := n.right.right
-
-	wasLeft.right = other
-	wasRightRight.left = n
-
-	n.right = wasRightRight
-	n.left = other
-
-	other.left = wasLeft
-	other.right = n
+	pNode := n.getByIndex(steps)
+	n.extract()
+	pNode.addRight(n)
 }
 
 func (n *node) moveLeft(steps int) {
 	if steps < 0 {
 		panic("steps must be >= 0")
 	}
+	pNode := n
 	for i := 0; i < steps; i++ {
-		n.swapWithLeft()
+		pNode = pNode.left
 	}
-}
-
-func (n *node) swapWithLeft() {
-	if n.left == n {
-		panic("ring of 1?")
-	}
-
-	other := n.left
-	wasRight := n.right
-	wasLeftLeft := n.left.left
-
-	wasLeftLeft.right = n
-	wasRight.left = other
-
-	n.left = wasLeftLeft
-	n.right = other
-
-	other.left = n
-	other.right = wasRight
+	n.extract()
+	pNode.addLeft(n)
 }
 
 func (n *node) String() string {
