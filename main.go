@@ -145,5 +145,7 @@ func main() {
 	// day 20
 	lines := common.GetLinesFromFile("resources/20_ringbuffer.txt", true, true)
 	part1 := ringbuffer.Part1(lines)
-	fmt.Println(part1)
+	fmt.Println("part1:", part1)
+	part2 := ringbuffer.Part2(lines, 811589153)
+	fmt.Println("part2:", part2)
 }
