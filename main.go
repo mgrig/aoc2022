@@ -153,6 +153,6 @@ func main() {
 
 	// day 21
 	lines := common.GetLinesFromFile("resources/21_tree.txt", true, true)
-	part1 := tree.Part1(lines)
-	fmt.Println("part1:", part1)
+	part2 := tree.Part2(lines)
+	fmt.Println("part2:", part2)
 }
