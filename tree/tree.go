@@ -9,6 +9,19 @@ func Part2(lines []string) int {
 	fmt.Println("old graph:\n", root.graphvizString())
 
 	// transform the original tree into a new tree which has "humn" as the new root!
+	/*
+		Example: say in the original graph we model 3 + 5 resulting to the parent value = 8
+		    aaaa:"+"
+		   /       \
+		bbbb:3   humn:5
+
+		The new graph will look like this:
+		    humn:"-"
+		   /       \
+		aaaa:8   bbbb:3
+
+		On the new graph, just call getValue() on the new root node, which is "humn".
+	*/
 	newKnown := newKnownNodes()
 	newHumn := rec(humn, newKnown)
 
