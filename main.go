@@ -2,9 +2,8 @@ package main
 
 import (
 	"aoc2022/common"
-	"aoc2022/ringbuffer"
+	"aoc2022/tree"
 	"fmt"
-	"time"
 )
 
 func main() {
@@ -143,12 +142,17 @@ func main() {
 	// // part2 := robots.Part2(lines)
 	// // fmt.Println("part2", part2)
 
-	// day 20
-	lines := common.GetLinesFromFile("resources/20_ringbuffer.txt", true, true)
-	part1 := ringbuffer.Part1(lines)
+	// // day 20
+	// lines := common.GetLinesFromFile("resources/20_ringbuffer.txt", true, true)
+	// part1 := ringbuffer.Part1(lines)
+	// fmt.Println("part1:", part1)
+	// t0 := time.Now()
+	// part2 := ringbuffer.Part2(lines, 811589153)
+	// t1 := time.Now()
+	// fmt.Printf("(%d ms) part2: %d\n", int(t1.Sub(t0).Milliseconds()), part2)
+
+	// day 21
+	lines := common.GetLinesFromFile("resources/21_tree.txt", true, true)
+	part1 := tree.Part1(lines)
 	fmt.Println("part1:", part1)
-	t0 := time.Now()
-	part2 := ringbuffer.Part2(lines, 811589153)
-	t1 := time.Now()
-	fmt.Printf("(%d ms) part2: %d\n", int(t1.Sub(t0).Milliseconds()), part2)
 }
