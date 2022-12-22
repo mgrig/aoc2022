@@ -2,7 +2,7 @@ package main
 
 import (
 	"aoc2022/common"
-	"aoc2022/tree"
+	"aoc2022/problem22"
 	"fmt"
 )
 
@@ -151,8 +151,13 @@ func main() {
 	// t1 := time.Now()
 	// fmt.Printf("(%d ms) part2: %d\n", int(t1.Sub(t0).Milliseconds()), part2)
 
-	// day 21
-	lines := common.GetLinesFromFile("resources/21_tree.txt", true, true)
-	part2 := tree.Part2(lines)
-	fmt.Println("part2:", part2)
+	// // day 21
+	// lines := common.GetLinesFromFile("resources/21_tree_test.txt", true, true)
+	// part2 := tree.Part2(lines)
+	// fmt.Println("part2:", part2)
+
+	// day 22
+	lines := common.GetLinesFromFile("resources/22_board.txt", true, false)
+	part1 := problem22.Part1(lines)
+	fmt.Println("part1:", part1)
 }
