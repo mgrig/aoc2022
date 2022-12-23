@@ -47,3 +47,21 @@ func (sm *sparseMatrix) getBox() (topLeft, bottomRight coord) {
 
 	return newCoord(minr, minc), newCoord(maxr, maxc)
 }
+
+func (sm sparseMatrix) String() string {
+	ret := ""
+
+	topLeft, bottomRight := sm.getBox()
+	for r := topLeft.r; r <= bottomRight.r; r++ {
+		for c := topLeft.c; c <= bottomRight.c; c++ {
+			if sm.coords[newCoord(r, c)] {
+				ret += "#"
+			} else {
+				ret += "."
+			}
+		}
+		ret += "\n"
+	}
+
+	return ret
+}

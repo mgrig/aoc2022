@@ -1,6 +1,6 @@
 package problem23
 
-func Part1(lines []string) int {
+func Part2(lines []string) int {
 	mat := newSparseMatrix()
 	for r, line := range lines {
 		for c, elem := range line {
@@ -22,7 +22,9 @@ func Part1(lines []string) int {
 	}
 	directionIndex := 0
 
-	for round := 0; round < 10; round++ {
+	round := 0
+	for {
+		round++
 		proposals := make(map[coord]coord) // proposal > who proposed it
 		for k, _ := range mat.coords {
 			nw := mat.contains(newCoord(k.r-1, k.c-1))
@@ -52,9 +54,12 @@ func Part1(lines []string) int {
 					break
 				}
 			}
-			directionIndex++
 		}
+		directionIndex++
 
+		if len(proposals) == 0 {
+			break
+		}
 		// apply remaining proposals
 		for proposedPos, who := range proposals {
 			mat.addCoord(proposedPos)
@@ -62,11 +67,10 @@ func Part1(lines []string) int {
 		}
 	}
 
-	topLeft, bottomRight := mat.getBox()
-	width := bottomRight.c - topLeft.c + 1
-	height := bottomRight.r - topLeft.r + 1
+	// fmt.Println(round)
+	// fmt.Println(mat)
 
-	return width*height - len(mat.coords)
+	return round
 }
 
 func checkNorth(pos coord, nw, n, ne, e, se, s, sw, w bool) (ok bool, proposal coord) {
